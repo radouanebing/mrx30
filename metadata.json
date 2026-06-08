@@ -1,0 +1,8 @@
+{
+  "name": "Remix: تسيير مناوبات وعمال  الأشعة",
+  "description": "نظام متكامل لتسيير عمال مصلحة الأشعة، تنسيق المناوبات ومتابعة الحضور والغياب، مع نظام تنبيهات لتبادل الورديات وتقييم الأداء والتقارير الشهرية المصدرة للإكسل.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

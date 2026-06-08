@@ -1,0 +1,173 @@
+{
+  "entities": {
+    "Employee": {
+      "title": "Employee",
+      "description": "An employee or staff member in the radiology department",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "specialty": { "type": "string" },
+        "role": { "type": "string" },
+        "active": { "type": "boolean" },
+        "hiringDate": { "type": "string" },
+        "password": { "type": "string" },
+        "points": { "type": "number" },
+        "weekendWeight": { "type": "number" },
+        "team": { "type": "string" },
+        "customStartTime": { "type": "string" },
+        "customEndTime": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "role", "active"]
+    },
+    "Shift": {
+      "title": "Shift",
+      "description": "A scheduled daily shift for an employee",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "employeeId": { "type": "string" },
+        "date": { "type": "string" },
+        "type": { "type": "string" },
+        "room": { "type": "string" },
+        "hoursWorked": { "type": "number" },
+        "note": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" }
+      },
+      "required": ["id", "employeeId", "date", "type", "room", "hoursWorked"]
+    },
+    "ShiftSwapRequest": {
+      "title": "ShiftSwapRequest",
+      "description": "A request made by an employee to swap a shift with another",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "requesterId": { "type": "string" },
+        "shiftId": { "type": "string" },
+        "shiftDate": { "type": "string" },
+        "shiftType": { "type": "string" },
+        "proposedEmployeeId": { "type": "string" },
+        "status": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "requesterId", "shiftId", "shiftDate", "shiftType", "proposedEmployeeId", "status"]
+    },
+    "SuddenAbsence": {
+      "title": "SuddenAbsence",
+      "description": "A record of an employee's sudden day-of absence",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "employeeId": { "type": "string" },
+        "date": { "type": "string" },
+        "shiftType": { "type": "string" },
+        "reason": { "type": "string" },
+        "coverEmployeeId": { "type": "string" },
+        "covered": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "employeeId", "date", "shiftType", "covered"]
+    },
+    "PerformanceEvaluation": {
+      "title": "PerformanceEvaluation",
+      "description": "Monthly performance evaluation score card",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "employeeId": { "type": "string" },
+        "month": { "type": "string" },
+        "punctuality": { "type": "number" },
+        "clinicalSkills": { "type": "number" },
+        "teamwork": { "type": "number" },
+        "patientCare": { "type": "number" },
+        "reportsSpeed": { "type": "number" },
+        "overallScore": { "type": "number" },
+        "notes": { "type": "string" },
+        "evaluatorId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "employeeId", "month", "overallScore", "evaluatorId"]
+    },
+    "LeaveRequest": {
+      "title": "LeaveRequest",
+      "description": "A vacation or sick leave request",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "employeeId": { "type": "string" },
+        "leaveType": { "type": "string" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "totalDays": { "type": "number" },
+        "reason": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "rejectionReason": { "type": "string" }
+      },
+      "required": ["id", "employeeId", "leaveType", "startDate", "endDate", "totalDays", "status"]
+    },
+    "AdminNotice": {
+      "title": "AdminNotice",
+      "description": "An administrative bulletin board announcement",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "authorId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "important": { "type": "boolean" }
+      },
+      "required": ["id", "title", "content", "category", "authorId", "createdAt"]
+    },
+    "SystemSettings": {
+      "title": "SystemSettings",
+      "description": "Global application configuration settings",
+      "type": "object",
+      "properties": {
+        "showAlgorithmToEmployees": { "type": "boolean" },
+        "showSmartControlToEmployees": { "type": "boolean" }
+      },
+      "required": ["showAlgorithmToEmployees", "showSmartControlToEmployees"]
+    }
+  },
+  "firestore": {
+    "employees": {
+      "schema": "Employee",
+      "description": "Staff roster of employees and access privileges"
+    },
+    "shifts": {
+      "schema": "Shift",
+      "description": "Department scheduled shifts database"
+    },
+    "swapRequests": {
+      "schema": "ShiftSwapRequest",
+      "description": "Peer substitution swaps board"
+    },
+    "absences": {
+      "schema": "SuddenAbsence",
+      "description": "Sudden sick leave database and alerts"
+    },
+    "evaluations": {
+      "schema": "PerformanceEvaluation",
+      "description": "Confidential work performance reviews"
+    },
+    "leaves": {
+      "schema": "LeaveRequest",
+      "description": "Annual vacation or sick leaves docket"
+    },
+    "notices": {
+      "schema": "AdminNotice",
+      "description": "Administrative memo bulletin board"
+    },
+    "settings": {
+      "schema": "SystemSettings",
+      "description": "System UI control options"
+    }
+  }
+}

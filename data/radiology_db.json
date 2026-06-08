@@ -1,0 +1,549 @@
+{
+  "employees": [
+    {
+      "id": "emp-1",
+      "name": "MRX_RN",
+      "email": "naghnaghradouane@gmail.com",
+      "phone": "0551234567",
+      "specialty": "TECHNOLOGIST",
+      "role": "MANAGER",
+      "active": true,
+      "hiringDate": "2020-01-15",
+      "password": "123456",
+      "permissions": {
+        "edit_schedule": true,
+        "request_swap": true,
+        "view_reports": true,
+        "manage_settings": true
+      },
+      "points": 0
+    },
+    {
+      "id": "emp-2",
+      "name": "نوال",
+      "email": "a.harbi@hospital.gov",
+      "phone": "0557654321",
+      "specialty": "RADIOLOGIST",
+      "role": "EMPLOYEE",
+      "active": true,
+      "hiringDate": "2021-06-10",
+      "password": "123456",
+      "permissions": {
+        "edit_schedule": false,
+        "request_swap": true,
+        "view_reports": false,
+        "manage_settings": false
+      },
+      "points": 0
+    },
+    {
+      "id": "emp-3",
+      "name": "اسامة",
+      "email": "k.otaibi@hospital.gov",
+      "phone": "0502233445",
+      "specialty": "TECHNOLOGIST",
+      "role": "EMPLOYEE",
+      "active": true,
+      "hiringDate": "2022-03-01",
+      "password": "123456",
+      "permissions": {
+        "edit_schedule": false,
+        "request_swap": true,
+        "view_reports": false,
+        "manage_settings": false
+      },
+      "points": 0
+    },
+    {
+      "id": "emp-4",
+      "name": "امين",
+      "email": "s.shammari@hospital.gov",
+      "phone": "0569988776",
+      "specialty": "TECHNOLOGIST",
+      "role": "EMPLOYEE",
+      "active": true,
+      "hiringDate": "2022-11-20",
+      "password": "123456",
+      "permissions": {
+        "edit_schedule": false,
+        "request_swap": true,
+        "view_reports": false,
+        "manage_settings": false
+      },
+      "points": 0
+    },
+    {
+      "id": "emp-5",
+      "name": "لطفي",
+      "email": "y.qahtani@hospital.gov",
+      "phone": "0543322110",
+      "specialty": "TECHNOLOGIST",
+      "role": "EMPLOYEE",
+      "active": true,
+      "hiringDate": "2023-05-15",
+      "password": "123456",
+      "permissions": {
+        "edit_schedule": false,
+        "request_swap": true,
+        "view_reports": false,
+        "manage_settings": false
+      },
+      "points": 0
+    },
+    {
+      "id": "emp-6",
+      "name": "محمد",
+      "email": "m.asiri@hospital.gov",
+      "phone": "0531122334",
+      "specialty": "NURSE",
+      "role": "EMPLOYEE",
+      "active": true,
+      "hiringDate": "2021-09-01",
+      "password": "123456",
+      "permissions": {
+        "edit_schedule": false,
+        "request_swap": true,
+        "view_reports": false,
+        "manage_settings": false
+      },
+      "points": 0
+    },
+    {
+      "id": "emp-7",
+      "name": "فاطمة",
+      "email": "f.dawsari@hospital.gov",
+      "phone": "0598877665",
+      "specialty": "SECRETARY",
+      "role": "EMPLOYEE",
+      "active": true,
+      "hiringDate": "2022-01-10",
+      "password": "123456",
+      "permissions": {
+        "edit_schedule": false,
+        "request_swap": true,
+        "view_reports": false,
+        "manage_settings": false
+      },
+      "points": 0
+    }
+  ],
+  "shifts": [
+    {
+      "id": "shift-m1-1",
+      "employeeId": "emp-4",
+      "date": "2026-06-01",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-1",
+      "employeeId": "emp-2",
+      "date": "2026-06-01",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-1",
+      "employeeId": "emp-5",
+      "date": "2026-06-01",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-1",
+      "employeeId": "emp-6",
+      "date": "2026-06-01",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    },
+    {
+      "id": "shift-m1-2",
+      "employeeId": "emp-5",
+      "date": "2026-06-02",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-2",
+      "employeeId": "emp-1",
+      "date": "2026-06-02",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-2",
+      "employeeId": "emp-4",
+      "date": "2026-06-02",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-2",
+      "employeeId": "emp-3",
+      "date": "2026-06-02",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    },
+    {
+      "id": "shift-m1-3",
+      "employeeId": "emp-6",
+      "date": "2026-06-03",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-3",
+      "employeeId": "emp-2",
+      "date": "2026-06-03",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-3",
+      "employeeId": "emp-3",
+      "date": "2026-06-03",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-3",
+      "employeeId": "emp-4",
+      "date": "2026-06-03",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    },
+    {
+      "id": "shift-m1-4",
+      "employeeId": "emp-3",
+      "date": "2026-06-04",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-4",
+      "employeeId": "emp-1",
+      "date": "2026-06-04",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-4",
+      "employeeId": "emp-4",
+      "date": "2026-06-04",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-4",
+      "employeeId": "emp-5",
+      "date": "2026-06-04",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    },
+    {
+      "id": "shift-m1-5",
+      "employeeId": "emp-4",
+      "date": "2026-06-05",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-5",
+      "employeeId": "emp-2",
+      "date": "2026-06-05",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-5",
+      "employeeId": "emp-5",
+      "date": "2026-06-05",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-5",
+      "employeeId": "emp-6",
+      "date": "2026-06-05",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    },
+    {
+      "id": "shift-m1-6",
+      "employeeId": "emp-5",
+      "date": "2026-06-06",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-6",
+      "employeeId": "emp-1",
+      "date": "2026-06-06",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-6",
+      "employeeId": "emp-6",
+      "date": "2026-06-06",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-6",
+      "employeeId": "emp-3",
+      "date": "2026-06-06",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    },
+    {
+      "id": "shift-m1-7",
+      "employeeId": "emp-6",
+      "date": "2026-06-07",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-7",
+      "employeeId": "emp-2",
+      "date": "2026-06-07",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-7",
+      "employeeId": "emp-3",
+      "date": "2026-06-07",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-7",
+      "employeeId": "emp-4",
+      "date": "2026-06-07",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    },
+    {
+      "id": "shift-m1-8",
+      "employeeId": "emp-3",
+      "date": "2026-06-08",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-8",
+      "employeeId": "emp-1",
+      "date": "2026-06-08",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-8",
+      "employeeId": "emp-4",
+      "date": "2026-06-08",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-8",
+      "employeeId": "emp-5",
+      "date": "2026-06-08",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    },
+    {
+      "id": "shift-m1-9",
+      "employeeId": "emp-4",
+      "date": "2026-06-09",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-9",
+      "employeeId": "emp-2",
+      "date": "2026-06-09",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-9",
+      "employeeId": "emp-5",
+      "date": "2026-06-09",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-9",
+      "employeeId": "emp-6",
+      "date": "2026-06-09",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    },
+    {
+      "id": "shift-m1-10",
+      "employeeId": "emp-5",
+      "date": "2026-06-10",
+      "type": "MORNING",
+      "room": "غرفة الرنين المغناطيسي (MRI)",
+      "hoursWorked": 8,
+      "note": "الرنين اليومي المجدول"
+    },
+    {
+      "id": "shift-m2-10",
+      "employeeId": "emp-1",
+      "date": "2026-06-10",
+      "type": "MORNING",
+      "room": "غرفة الأشعة المقطعية (CT)",
+      "hoursWorked": 8,
+      "note": "طبيب الأشعة المشرف"
+    },
+    {
+      "id": "shift-e1-10",
+      "employeeId": "emp-6",
+      "date": "2026-06-10",
+      "type": "EVENING",
+      "room": "غرفة الأشعة العادية (X-Ray)",
+      "hoursWorked": 8,
+      "note": "قسم الطوارئ والأشعة العادية"
+    },
+    {
+      "id": "shift-n1-10",
+      "employeeId": "emp-3",
+      "date": "2026-06-10",
+      "type": "NIGHT",
+      "room": "غرفة السونار (Ultrasound)",
+      "hoursWorked": 8,
+      "note": "مناوبة ليلية طارئة"
+    }
+  ],
+  "swapRequests": [
+    {
+      "id": "swap-1",
+      "requesterId": "emp-3",
+      "shiftId": "shift-e1-2",
+      "shiftDate": "2026-06-02",
+      "shiftType": "EVENING",
+      "proposedEmployeeId": "emp-4",
+      "status": "APPROVED",
+      "notes": "لدى ظرف عائلي طارئ يتطلب حضوري في المساء. هل من الممكن التبديل معي؟",
+      "createdAt": "2026-06-01T06:00:00Z",
+      "resolvedById": "emp-1",
+      "resolvedAt": "2026-06-01T13:16:44.796Z"
+    }
+  ],
+  "absences": [
+    {
+      "id": "abs-1",
+      "employeeId": "emp-5",
+      "date": "2026-06-01",
+      "shiftType": "NIGHT",
+      "reason": "عذر طبي مفاجئ (نزلة برد)",
+      "coverEmployeeId": "emp-3",
+      "covered": true,
+      "createdAt": "2026-06-01T07:00:00Z"
+    }
+  ],
+  "evaluations": [
+    {
+      "id": "eval-1",
+      "employeeId": "emp-3",
+      "month": "2026-05",
+      "punctuality": 5,
+      "clinicalSkills": 4,
+      "teamwork": 5,
+      "patientCare": 4,
+      "reportsSpeed": 4,
+      "overallScore": 4.4,
+      "notes": "خالد ملتزم جداً بالوقت ويؤدي الفحوصات بمهارة متميزة وروح جماعية رائعة.",
+      "evaluatorId": "emp-1",
+      "createdAt": "2026-05-28T10:00:00Z"
+    },
+    {
+      "id": "eval-2",
+      "employeeId": "emp-4",
+      "month": "2026-05",
+      "punctuality": 4,
+      "clinicalSkills": 5,
+      "teamwork": 4,
+      "patientCare": 5,
+      "reportsSpeed": 3,
+      "overallScore": 4.2,
+      "notes": "سارة مميزة للغاية في رعاية المرضى والتعامل بلطف. تحتاج لتحسين سرعة إنهاء الفحص.",
+      "evaluatorId": "emp-1",
+      "createdAt": "2026-05-29T11:30:00Z"
+    }
+  ]
+}

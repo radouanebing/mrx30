@@ -1,0 +1,88 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. Global Safety Net - Default Deny Catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Hardened Global Security Primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Dynamic role lookup from firestore. Retrieves the employee's role securely and compares to MANAGER
+    function isAdmin() {
+      return isSignedIn() && 
+        exists(/databases/$(database)/documents/employees/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/employees/$(request.auth.uid)).data.role == 'MANAGER';
+    }
+
+    // --- Collections Match Rules ---
+
+    // 1. Employees Roster & Sensitive Profile Data
+    match /employees/{employeeId} {
+      allow read: if isSignedIn();
+      // Only administrators can add or edit employee roster records
+      allow write: if isAdmin();
+    }
+
+    // 2. Scheduled Work Shifts
+    match /shifts/{shiftId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // 3. Peer Substitution Shift Swaps
+    match /swapRequests/{swapRequestId} {
+      allow read: if isSignedIn();
+      // Any signed in user can create a swap request, but only admins or the requester/proposed users can update
+      allow create: if isSignedIn();
+      allow update, delete: if isAdmin() || (isSignedIn() && (resource.data.requesterId == request.auth.uid || resource.data.proposedEmployeeId == request.auth.uid));
+    }
+
+    // 4. Sudden Day-of Absences & Covers
+    match /absences/{absenceId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // 5. PII Isolation & Secure Performance Evaluations (Sensitive Information)
+    match /evaluations/{evaluationId} {
+      // Confidential: Employees can only view their own performance score cards; managers view everything
+      allow read: if isSignedIn() && (isAdmin() || resource.data.employeeId == request.auth.uid);
+      allow write: if isAdmin();
+    }
+
+    // 6. Vacation & Sick Leaves Applications
+    match /leaves/{leaveId} {
+      allow read: if isSignedIn();
+      // Employees can request leaves, but only admin can approve or deny
+      allow create: if isSignedIn() && request.resource.data.employeeId == request.auth.uid;
+      allow update: if isAdmin() || (isSignedIn() && resource.data.employeeId == request.auth.uid && request.resource.data.status == 'PENDING');
+      allow delete: if isAdmin() || (isSignedIn() && resource.data.employeeId == request.auth.uid);
+    }
+
+    // 7. Administrative Notices & Board Bulletins
+    match /notices/{noticeId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // 8. Global System Setting Control Toggles
+    match /settings/{settingsId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // 9. Legacy State Sync Document
+    match /state/{stateId} {
+      allow read, write: if request.auth == null || (request.auth != null && request.auth.uid == 'server-admin') || isAdmin();
+    }
+  }
+}

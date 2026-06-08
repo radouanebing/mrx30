@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f8fafc;
+  direction: rtl;
+  text-align: right;
+  color: #0f172a;
+}
+
+/* Custom scrollbar for modern schedules */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ==========================================
+   RADIOLOGY DARK ROOM THEME (الوضع الليلي)
+   ========================================== */
+
+body.dark {
+  background-color: #0d131f !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark ::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+body.dark ::-webkit-scrollbar-thumb {
+  background: #374151;
+}
+
+body.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+/* Base layout items override */
+body.dark #radiology-platform-root {
+  background-color: #090d16 !important;
+  color: #e2e8f0 !important;
+}
+
+/* Force dark backdrops for all cards, container boxes and sidebars */
+body.dark header#sleek-top-nav,
+body.dark aside#sleek-sidebar,
+body.dark footer,
+body.dark .bg-white,
+body.dark .bg-slate-50,
+body.dark .bg-gray-50,
+body.dark .bg-slate-100/50,
+body.dark .bg-slate-50\/40,
+body.dark [class*="bg-white"],
+body.dark [class*="bg-slate-50"] {
+  background-color: #111827 !important;
+  color: #f1f5f9 !important;
+  border-color: #1f2937 !important;
+}
+
+/* Input, search & Form controls overrides */
+body.dark input,
+body.dark select,
+body.dark textarea,
+body.dark button[class*="bg-white"],
+body.dark select[class*="bg-white"],
+body.dark input[class*="bg-white"],
+body.dark .bg-slate-50 input,
+body.dark .bg-slate-50 select {
+  background-color: #1f2937 !important;
+  color: #f1f5f9 !important;
+  border-color: #374151 !important;
+}
+
+/* Specific component containers */
+body.dark #dark-mode-sidebar-control,
+body.dark #dark-mode-sidebar-control .bg-slate-50,
+body.dark aside #dark-mode-sidebar-control {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+}
+
+body.dark #dark-mode-sidebar-control h4 {
+  color: #f1f5f9 !important;
+}
+
+body.dark #dark-mode-sidebar-control p {
+  color: #9ca3af !important;
+}
+
+/* Heading & Text Color overrides for high contrast readability */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6,
+body.dark .text-slate-900,
+body.dark .text-slate-800,
+body.dark .text-slate-700,
+body.dark .text-slate-600,
+body.dark .text-slate-950,
+body.dark .text-gray-900,
+body.dark .text-gray-800,
+body.dark .text-indigo-950,
+body.dark .text-indigo-900 {
+  color: #f1f5f9 !important;
+}
+
+body.dark .text-slate-500,
+body.dark .text-slate-400,
+body.dark .text-gray-500,
+body.dark .text-gray-400 {
+  color: #9cb3c9 !important;
+}
+
+body.dark .text-slate-300,
+body.dark .text-slate-350 {
+  color: #cbd5e1 !important;
+}
+
+/* Border color overrides */
+body.dark .border,
+body.dark .border-t,
+body.dark .border-b,
+body.dark .border-l,
+body.dark .border-r,
+body.dark .border-slate-100,
+body.dark .border-slate-200,
+body.dark .border-slate-300,
+body.dark .border-gray-100,
+body.dark .border-gray-200 {
+  border-color: #1f2937 !important;
+}
+
+/* Active tab state in sidebar */
+body.dark #sleek-sidebar button:not([id*="nav-tab-dashboard"]):not([id*="nav-tab-schedule"]):not([class*="bg-slate-900"]):hover,
+body.dark #sleek-sidebar button:hover {
+  background-color: #1f2937 !important;
+  color: #2dd4bf !important;
+}
+
+body.dark #sleek-sidebar .text-slate-600 {
+  color: #d1d5db !important;
+}
+
+/* Table overrides (Schedule components) */
+body.dark table,
+body.dark th,
+body.dark td,
+body.dark thead,
+body.dark thead tr {
+  background-color: #111827 !important;
+  border-color: #1f2937 !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark tbody tr {
+  background-color: #111827 !important;
+}
+
+body.dark tbody tr:hover {
+  background-color: #1f2937 !important;
+}
+
+/* Calendar slots/boxes */
+body.dark .bg-sky-50\/40,
+body.dark .bg-teal-50\/40,
+body.dark .bg-rose-50\/30,
+body.dark .bg-amber-50\/30,
+body.dark .bg-slate-50\/40 {
+  background-color: #1e293b !important;
+}
+
+/* Modals & popup overlays */
+body.dark .bg-white\/10,
+body.dark .bg-white\/80,
+body.dark .backdrop-blur-sm,
+body.dark [class*="bg-white/80"] {
+  background-color: rgba(9, 13, 22, 0.8) !important;
+}
+
+body.dark .bg-slate-900 {
+  background-color: #090d16 !important;
+}
+
+/* Alerts, Notification Toasts */
+body.dark .bg-rose-50 {
+  background-color: #4c0519 !important;
+  color: #fecdd3 !important;
+  border-color: #881337 !important;
+}
+
+body.dark .bg-emerald-50 {
+  background-color: #064e3b !important;
+  color: #d1fae5 !important;
+  border-color: #065f46 !important;
+}
+
+body.dark .bg-amber-500\/10 {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+  color: #fef3c7 !important;
+}
+
+/* Profile sections and details box */
+body.dark .bg-sky-100 {
+  background-color: #1e3a8a !important;
+  color: #93c5fd !important;
+}
+
+body.dark .bg-slate-100 {
+  background-color: #1f2937 !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark .bg-indigo-100 {
+  background-color: #312e81 !important;
+  color: #c7d2fe !important;
+}
+
+body.dark .bg-amber-200 {
+  background-color: #d97706 !important;
+  color: #fef3c7 !important;
+}
+
+body.dark .bg-emerald-600 {
+  background-color: #059669 !important;
+}
+
+body.dark .bg-teal-600 {
+  background-color: #0d9488 !important;
+}
+
+body.dark .bg-sky-600 {
+  background-color: #0284c7 !important;
+}
+
+body.dark .bg-red-600 {
+  background-color: #dc2626 !important;
+}
+
+body.dark .bg-yellow-500 {
+  background-color: #d97706 !important;
+}
+
+body.dark .bg-purple-600 {
+  background-color: #7c3aed !important;
+}
