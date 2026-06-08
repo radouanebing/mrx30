@@ -824,14 +824,7 @@ export default function App() {
   const uncoveredAbsencesCount = absences.filter(a => !a.covered).length;
 
   if (!currentUser) {
-    if (employees.length === 0) {
-      return (
-        <div className="min-h-screen bg-slate-900 flex flex-col justify-center items-center font-sans gap-4">
-          <RefreshCw className="h-10 w-10 text-teal-400 animate-spin" />
-          <p className="text-sm font-bold text-slate-350 text-slate-300">جاري الاتصال بقاعدة بيانات المشفى وجلب السجلات...</p>
-        </div>
-      );
-    }
+    // We allow rendering the Login Portal even if employees are initially empty
     return <LoginPortal employees={employees} onLoginSuccess={handleLoginSuccess} />;
   }
 

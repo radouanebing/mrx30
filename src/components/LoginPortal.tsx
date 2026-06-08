@@ -10,7 +10,7 @@ interface LoginPortalProps {
 }
 
 export default function LoginPortal({ employees, onLoginSuccess }: LoginPortalProps) {
-  const [selectedEmpId, setSelectedEmpId] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -92,9 +92,6 @@ export default function LoginPortal({ employees, onLoginSuccess }: LoginPortalPr
     }, 1000);
   };
 
-  // Filter only active employees
-  const activeEmployees = employees.filter((e) => e.active !== false);
-
   // Inject Google reCAPTCHA v2 Script dynamically on mount
   useEffect(() => {
     if (typeof window !== "undefined" && !document.getElementById("recaptcha-script-src")) {
@@ -111,14 +108,8 @@ export default function LoginPortal({ employees, onLoginSuccess }: LoginPortalPr
      e.preventDefault();
      setError(null);
 
-     if (!selectedEmpId) {
-       setError("الرجاء اختيار اسم الموظف/العامل أولاً.");
-       return;
-     }
-
-     const employee = employees.find((emp) => emp.id === selectedEmpId);
-     if (!employee) {
-       setError("الموظف غير موجود في النظام.");
+     if (!emailOrUsername.trim()) {
+       setError("الرجاء إدخال البريد الإلكتروني أو اسم المستخدم.");
        return;
      }
 
@@ -134,35 +125,45 @@ export default function LoginPortal({ employees, onLoginSuccess }: LoginPortalPr
      }
 
      setLoading(true);
-     const employeeEmail = employee.email || `${employee.id}@radiology-dept.com`;
+     
+     // Determine if it's an email or username
+     let employeeEmail = emailOrUsername.trim();
+     if (!employeeEmail.includes("@")) {
+       employeeEmail = `${employeeEmail}@radiology-dept.com`;
+     }
+
+     // Try to find the local employee by ID or email
+     let employee = employees.find(
+       (emp) => emp.email === employeeEmail || emp.id === emailOrUsername.trim() || emp.name.includes(emailOrUsername.trim())
+     );
+
+     // If not found locally, create a default employee object to proceed if login succeeds
+     if (!employee) {
+       employee = {
+         id: emailOrUsername.trim(),
+         name: emailOrUsername.trim().split("@")[0],
+         role: UserRole.EMPLOYEE,
+         active: true,
+       };
+     }
 
      secureLogin(employeeEmail, enteredPassword, recaptchaToken)
        .then(() => {
          setLoading(false);
-         onLoginSuccess(employee);
+         // Type narrowing: employee is definitely set here
+         onLoginSuccess(employee as Employee);
        })
        .catch((err: any) => {
          console.warn("[Firebase Auth] Authentication issue encountered:", err.code || err.message);
          
-         // If Email/Password auth is not yet enabled in Firebase Console (auth/operation-not-allowed)
-         // or if there are other operational blockages, fallback gracefully to system's password config
-         // to avoid locking out developers or reviewers.
-         const correctPassword = (employee.password || "123456").trim();
+         // Fallback logic for offline testing
+         const correctPassword = (employee?.password || "123456").trim();
          
          if (err.code === "auth/operation-not-allowed" || err.message?.includes("operation-not-allowed")) {
            if (enteredPassword === correctPassword) {
              console.log("[Firebase Fallback] Local credential matched. Enabling backup login bypass.");
              setLoading(false);
-             onLoginSuccess(employee);
-             // Show alert/instructions to console of how to enable it in Firebase Console
-             console.info(
-               "%c[Firebase Instructions] To enable true email/password authentication:\n" +
-               "1. Go to Firebase Console (https://console.firebase.google.com/)\n" +
-               "2. Select your project: optimistic-doodad-l9fkf\n" +
-               "3. Navigate to Build > Authentication > Sign-in method\n" +
-               "4. Enable 'Email/Password' under Native Providers.",
-               "color: #0d9488; font-weight: bold; font-size: 11px;"
-             );
+             onLoginSuccess(employee as Employee);
              return;
            } else {
              setLoading(false);
@@ -171,11 +172,10 @@ export default function LoginPortal({ employees, onLoginSuccess }: LoginPortalPr
            }
          }
          
-         // For general errors, also check if password is correct to allow testing when offline/without setup
          if (enteredPassword === correctPassword) {
            console.log("[Firebase Fallback] Local system bypass initialized successfully.");
            setLoading(false);
-           onLoginSuccess(employee);
+           onLoginSuccess(employee as Employee);
            return;
          }
 
@@ -330,32 +330,29 @@ export default function LoginPortal({ employees, onLoginSuccess }: LoginPortalPr
           )}
 
           <div className="space-y-4">
-            {/* Employee Selector field */}
+            {/* Email/Username input field */}
             <div>
-              <label htmlFor="employee-select" className="block text-[11px] font-bold text-slate-300 mb-1.5 r">
-                اسم العامل / الموظف:
+              <label htmlFor="email-username-input" className="block text-[11px] font-bold text-slate-300 mb-1.5 r">
+                البريد الإلكتروني أو اسم المستخدم:
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-500">
                   <User className="h-4 w-4" />
                 </div>
-                <select
-                  id="employee-select"
-                  value={selectedEmpId}
+                <input
+                  id="email-username-input"
+                  name="emailOrUsername"
+                  type="text"
+                  required
+                  placeholder="أدخل بريدك الإلكتروني أو اسم المستخدم"
+                  value={emailOrUsername}
                   onChange={(e) => {
-                    setSelectedEmpId(e.target.value);
+                    setEmailOrUsername(e.target.value);
                     setError(null);
                   }}
-                  className="block w-full pr-10 pl-3 py-3 bg-slate-900 border border-slate-7 w-full text-xs text-slate-100 bg-slate-900 border-slate-700 rounded-xl focus:ring-1 focus:ring-teal-500 focus:outline-none focus:border-teal-500 cursor-pointer text-right appearance-none"
-                  style={{ backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`, backgroundPosition: "left 0.75rem center", backgroundSize: "1em", backgroundRepeat: "no-repeat" }}
-                >
-                  <option value="" className="text-slate-500">-- اختر اسمك للولوج السريع --</option>
-                  {activeEmployees.map((emp) => (
-                    <option key={emp.id} value={emp.id} className="bg-slate-850 text-white">
-                      {emp.name} ({emp.role === UserRole.MANAGER ? "مدير مصلحة" : emp.role === UserRole.SUPERVISOR ? "مشرف مناوبات" : "موظف مصلحة"})
-                    </option>
-                  ))}
-                </select>
+                  className="block w-full pr-10 pl-3 py-3 text-xs text-slate-100 bg-slate-900 border border-slate-750 border-slate-700/80 rounded-xl focus:ring-1 focus:ring-teal-500 focus:outline-none focus:border-teal-500 text-right font-sans placeholder-slate-650"
+                  dir="ltr"
+                />
               </div>
             </div>
 
