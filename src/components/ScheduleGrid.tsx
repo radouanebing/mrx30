@@ -20,6 +20,77 @@ interface ScheduleGridProps {
   simulatedTime?: Date | null;
 }
 
+export function getShiftColors(type: ShiftType, settings: SystemSettings | null) {
+  const defaultPrefix = {
+    MORNING: {
+      bg: "bg-amber-50 text-amber-900 border-amber-200",
+      dot: "bg-amber-400",
+      hdr: "border-amber-100 bg-amber-50/50",
+      hdrBadge: "bg-amber-100 text-amber-900",
+      text: "text-amber-805 text-amber-800",
+      badgeText: "bg-amber-100 text-amber-700"
+    },
+    EVENING: {
+      bg: "bg-indigo-50 text-indigo-900 border-indigo-200",
+      dot: "bg-indigo-505 bg-indigo-500",
+      hdr: "border-indigo-100 bg-indigo-50/50",
+      hdrBadge: "bg-indigo-100 text-indigo-900",
+      text: "text-indigo-805 text-indigo-800",
+      badgeText: "bg-indigo-100 text-indigo-700"
+    },
+    NIGHT: {
+      bg: "bg-purple-50 text-purple-900 border-purple-200",
+      dot: "bg-purple-600",
+      hdr: "border-purple-100 bg-purple-50/50",
+      hdrBadge: "bg-purple-100 text-purple-900",
+      text: "text-purple-805 text-purple-800",
+      badgeText: "bg-purple-100 text-purple-700"
+    }
+  };
+
+  const activeColor = 
+    type === ShiftType.MORNING ? settings?.morningShiftColor :
+    type === ShiftType.EVENING ? settings?.eveningShiftColor :
+    settings?.nightShiftColor;
+
+  if (activeColor) {
+    return {
+      isCustom: true,
+      hexColor: activeColor,
+      dotStyle: { backgroundColor: activeColor },
+      bgStyle: { 
+        backgroundColor: `${activeColor}12`, 
+        color: activeColor,
+        borderColor: `${activeColor}40` 
+      },
+      hdrStyle: {
+        backgroundColor: `${activeColor}08`, 
+        borderColor: `${activeColor}20`, 
+      },
+      hdrBadgeStyle: {
+        backgroundColor: `${activeColor}20`,
+        color: activeColor,
+      }
+    };
+  }
+
+  const defaults = defaultPrefix[type] || defaultPrefix.MORNING;
+  return {
+    isCustom: false,
+    hexColor: type === ShiftType.MORNING ? "#f59e0b" : type === ShiftType.EVENING ? "#6366f1" : "#9333ea",
+    bgClass: defaults.bg,
+    dotClass: defaults.dot,
+    hdrClass: defaults.hdr,
+    hdrBadgeClass: defaults.hdrBadge,
+    textClass: defaults.text,
+    badgeTextClass: defaults.badgeText,
+    dotStyle: {},
+    bgStyle: {},
+    hdrStyle: {},
+    hdrBadgeStyle: {}
+  };
+}
+
 export default function ScheduleGrid({
   shifts,
   employees,
@@ -38,6 +109,10 @@ export default function ScheduleGrid({
   const [selectedDate, setSelectedDate] = useState<string>("2026-06-01");
   const [viewMode, setViewMode] = useState<"daily" | "monthly">("daily");
   const [selectedTeamFilter, setSelectedTeamFilter] = useState<"ALL" | "SCANNER" | "IRM">("ALL");
+
+  const morningColors = getShiftColors(ShiftType.MORNING, settings);
+  const eveningColors = getShiftColors(ShiftType.EVENING, settings);
+  const nightColors = getShiftColors(ShiftType.NIGHT, settings);
 
   // Navigation days (All 30 days of June 2026 for a full monthly view)
   const targetDays = Array.from({ length: 30 }, (_, i) => {
@@ -391,17 +466,33 @@ export default function ScheduleGrid({
             
             {/* Morning Column */}
             <div className="bg-white border border-slate-100 rounded-xl shadow-sm p-4 flex flex-col h-full">
-              <div className="flex justify-between items-center pb-3 border-b border-amber-100 mb-4 bg-amber-50/50 p-2 rounded-lg">
+              <div 
+                className={`flex justify-between items-center pb-3 border-b mb-4 p-2 rounded-lg ${
+                  morningColors.isCustom ? "" : "border-amber-100 bg-amber-50/50"
+                }`}
+                style={morningColors.isCustom ? morningColors.hdrStyle : undefined}
+              >
                 <div className="flex items-center gap-2">
-                  <span className="p-1.5 bg-amber-100 text-amber-700 rounded-lg">
+                  <span 
+                    className={`p-1.5 rounded-lg ${morningColors.isCustom ? "" : "bg-amber-100 text-amber-700"}`}
+                    style={morningColors.isCustom ? morningColors.hdrBadgeStyle : undefined}
+                  >
                     <Clock className="h-4 w-4" />
                   </span>
                   <div>
                     <h3 className="font-bold text-slate-900 text-sm">المناوبة الصباحية</h3>
-                    <span className="text-[11px] text-amber-805 text-amber-800">08:00 صباحاً - 02:00 مساءً</span>
+                    <span 
+                      className={`text-[11px] ${morningColors.isCustom ? "" : morningColors.textClass}`}
+                      style={morningColors.isCustom ? { color: morningColors.hexColor } : undefined}
+                    >08:00 صباحاً - 02:00 مساءً</span>
                   </div>
                 </div>
-                <span className="bg-amber-100 text-amber-900 text-xs px-2.5 py-0.5 rounded-full font-black">
+                <span 
+                  className={`text-xs px-2.5 py-0.5 rounded-full font-black ${
+                    morningColors.isCustom ? "" : morningColors.hdrBadgeClass
+                  }`}
+                  style={morningColors.isCustom ? morningColors.hdrBadgeStyle : undefined}
+                >
                   {morningShifts.length} موظفين
                 </span>
               </div>
@@ -434,17 +525,33 @@ export default function ScheduleGrid({
 
             {/* Evening Column */}
             <div className="bg-white border border-slate-100 rounded-xl shadow-sm p-4 flex flex-col h-full">
-              <div className="flex justify-between items-center pb-3 border-b border-indigo-100 mb-4 bg-indigo-50/50 p-2 rounded-lg">
+              <div 
+                className={`flex justify-between items-center pb-3 border-b mb-4 p-2 rounded-lg ${
+                  eveningColors.isCustom ? "" : "border-indigo-100 bg-indigo-50/50"
+                }`}
+                style={eveningColors.isCustom ? eveningColors.hdrStyle : undefined}
+              >
                 <div className="flex items-center gap-2">
-                  <span className="p-1.5 bg-indigo-100 text-indigo-700 rounded-lg">
+                  <span 
+                    className={`p-1.5 rounded-lg ${eveningColors.isCustom ? "" : "bg-indigo-100 text-indigo-700"}`}
+                    style={eveningColors.isCustom ? eveningColors.hdrBadgeStyle : undefined}
+                  >
                     <Clock className="h-4 w-4" />
                   </span>
                   <div>
                     <h3 className="font-bold text-slate-900 text-sm">المناوبة المسائية</h3>
-                    <span className="text-[11px] text-indigo-805 text-indigo-800">02:00 مساءً - 08:00 مساءً</span>
+                    <span 
+                      className={`text-[11px] ${eveningColors.isCustom ? "" : eveningColors.textClass}`}
+                      style={eveningColors.isCustom ? { color: eveningColors.hexColor } : undefined}
+                    >02:00 مساءً - 08:00 مساءً</span>
                   </div>
                 </div>
-                <span className="bg-indigo-100 text-indigo-900 text-xs px-2.5 py-0.5 rounded-full font-black">
+                <span 
+                  className={`text-xs px-2.5 py-0.5 rounded-full font-black ${
+                    eveningColors.isCustom ? "" : eveningColors.hdrBadgeClass
+                  }`}
+                  style={eveningColors.isCustom ? eveningColors.hdrBadgeStyle : undefined}
+                >
                   {eveningShifts.length} موظفين
                 </span>
               </div>
@@ -463,17 +570,33 @@ export default function ScheduleGrid({
 
             {/* Night Column */}
             <div className="bg-white border border-slate-100 rounded-xl shadow-sm p-4 flex flex-col h-full">
-              <div className="flex justify-between items-center pb-3 border-b border-purple-100 mb-4 bg-purple-50/50 p-2 rounded-lg">
+              <div 
+                className={`flex justify-between items-center pb-3 border-b mb-4 p-2 rounded-lg ${
+                  nightColors.isCustom ? "" : "border-purple-100 bg-purple-50/50"
+                }`}
+                style={nightColors.isCustom ? nightColors.hdrStyle : undefined}
+              >
                 <div className="flex items-center gap-2">
-                  <span className="p-1.5 bg-purple-100 text-purple-700 rounded-lg">
+                  <span 
+                    className={`p-1.5 rounded-lg ${nightColors.isCustom ? "" : "bg-purple-100 text-purple-700"}`}
+                    style={nightColors.isCustom ? nightColors.hdrBadgeStyle : undefined}
+                  >
                     <Clock className="h-4 w-4" />
                   </span>
                   <div>
                     <h3 className="font-bold text-slate-900 text-sm">المناوبة الليلية</h3>
-                    <span className="text-[11px] text-purple-805 text-purple-800">08:00 مساءً - 08:00 صباحاً</span>
+                    <span 
+                      className={`text-[11px] ${nightColors.isCustom ? "" : nightColors.textClass}`}
+                      style={nightColors.isCustom ? { color: nightColors.hexColor } : undefined}
+                    >08:00 مساءً - 08:00 صباحاً</span>
                   </div>
                 </div>
-                <span className="bg-purple-100 text-purple-900 text-xs px-2.5 py-0.5 rounded-full font-black">
+                <span 
+                  className={`text-xs px-2.5 py-0.5 rounded-full font-black ${
+                    nightColors.isCustom ? "" : nightColors.hdrBadgeClass
+                  }`}
+                  style={nightColors.isCustom ? nightColors.hdrBadgeStyle : undefined}
+                >
                   {nightShifts.length} موظفين
                 </span>
               </div>
@@ -501,9 +624,36 @@ export default function ScheduleGrid({
               <p className="text-[10px] text-slate-400 mt-0.5">يونيو 2026 (شهر كامل منسق مسبقاً)</p>
             </div>
             <div className="flex gap-4 text-[10px] font-bold">
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-amber-400 inline-block"></span> صباحي (6س)</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-indigo-500 inline-block"></span> مسائي (6س)</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-purple-600 inline-block"></span> ليلي (12س)</span>
+              {(() => {
+                const morningColors = getShiftColors(ShiftType.MORNING, settings);
+                const eveningColors = getShiftColors(ShiftType.EVENING, settings);
+                const nightColors = getShiftColors(ShiftType.NIGHT, settings);
+                return (
+                  <>
+                    <span className="flex items-center gap-1.5">
+                      <span 
+                        className={`h-2 w-2 rounded-full inline-block ${morningColors.isCustom ? "" : "bg-amber-400"}`}
+                        style={morningColors.isCustom ? morningColors.dotStyle : undefined}
+                      ></span> 
+                      صباحي (6س)
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <span 
+                        className={`h-2 w-2 rounded-full inline-block ${eveningColors.isCustom ? "" : "bg-indigo-505 bg-indigo-500"}`}
+                        style={eveningColors.isCustom ? eveningColors.dotStyle : undefined}
+                      ></span> 
+                      مسائي (6س)
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <span 
+                        className={`h-2 w-2 rounded-full inline-block ${nightColors.isCustom ? "" : "bg-purple-600"}`}
+                        style={nightColors.isCustom ? nightColors.dotStyle : undefined}
+                      ></span> 
+                      ليلي (12س)
+                    </span>
+                  </>
+                );
+              })()}
             </div>
           </div>
 
@@ -573,20 +723,19 @@ export default function ScheduleGrid({
                     {dayShifts.slice(0, 3).map((sh) => {
                       const emp = employees.find(e => e.id === sh.employeeId);
                       const compactName = emp ? emp.name.split(" ")[0] : "موظف";
+                      const colors = getShiftColors(sh.type, settings);
                       return (
                         <div
                           key={sh.id}
                           className={`text-[9.5px] font-bold px-1.5 py-0.5 rounded-md border flex items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap ${
-                            sh.type === ShiftType.MORNING ? "bg-amber-50 text-amber-900 border-amber-200" :
-                            sh.type === ShiftType.EVENING ? "bg-indigo-50 text-indigo-900 border-indigo-200" :
-                            "bg-purple-50 text-purple-900 border-purple-200"
+                            colors.isCustom ? "" : colors.bgClass
                           }`}
+                          style={colors.isCustom ? colors.bgStyle : undefined}
                         >
-                          <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${
-                            sh.type === ShiftType.MORNING ? "bg-amber-400" :
-                            sh.type === ShiftType.EVENING ? "bg-indigo-505 bg-indigo-500" :
-                            "bg-purple-600"
-                          }`}></span>
+                          <span 
+                            className={`h-1.5 w-1.5 rounded-full shrink-0 ${colors.isCustom ? "" : colors.dotClass}`}
+                            style={colors.isCustom ? colors.dotStyle : undefined}
+                          ></span>
                           <span className="truncate">{compactName}</span>
                         </div>
                       );

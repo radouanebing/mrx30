@@ -119,11 +119,6 @@ export default function LoginPortal({ employees, onLoginSuccess }: LoginPortalPr
      const recaptchaElement = document.getElementsByName("g-recaptcha-response")[0] as HTMLTextAreaElement | undefined;
      const recaptchaToken = recaptchaElement?.value || "";
 
-     if (!recaptchaToken) {
-       setError("مطلوب تفعيل حماية reCAPTCHA! يرجى النقر على مربع تأكيد أنك لست روبوتًا بالأسفل لتأمين ولوج المصلحة.");
-       return;
-     }
-
      setLoading(true);
      
      // Determine if it's an email or username
@@ -133,7 +128,7 @@ export default function LoginPortal({ employees, onLoginSuccess }: LoginPortalPr
      }
 
      // Try to find the local employee by ID or email
-     let employee = employees.find(
+     let employee: any = employees.find(
        (emp) => emp.email === employeeEmail || emp.id === emailOrUsername.trim() || emp.name.includes(emailOrUsername.trim())
      );
 
@@ -425,7 +420,32 @@ export default function LoginPortal({ employees, onLoginSuccess }: LoginPortalPr
     </div>
         </form>
 
-        <div className="text-center pt-2">
+        {/* Quick Help for Test Accounts */}
+        {employees && employees.length > 0 && (
+          <div className="mt-6 bg-slate-900/50 border border-slate-800 rounded-xl p-3">
+            <p className="text-[10px] text-slate-400 font-bold mb-2 text-right">💡 حسابات متوفرة للنظام (كلمة السر الافتراضية: 123456):</p>
+            <div className="flex flex-col gap-2">
+              {employees.filter(e => e.active).map(emp => (
+                <button
+                  key={emp.id}
+                  type="button"
+                  onClick={() => setEmailOrUsername(emp.email)}
+                  className={`px-3 py-1.5 text-right w-full flex justify-between items-center rounded border cursor-pointer transition-colors ${
+                    emp.role === "MANAGER" ? "bg-rose-950/30 hover:bg-rose-900/40 text-rose-300 border-rose-900/50" : 
+                    "bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700"
+                  }`}
+                >
+                  <span className="text-[10px] font-mono">{emp.email}</span>
+                  <span className="text-[11px] font-bold">
+                    {emp.name} ({emp.role === "MANAGER" ? "مدير المصلحة" : "موظف"})
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="text-center pt-4">
           <p className="text-[10px] text-slate-500 font-sans">
             نظام المراقبة والأمان العالي © MRX_RN
           </p>

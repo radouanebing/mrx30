@@ -1072,6 +1072,205 @@ export default function SmartSchedulingPanel({
             </div>
           )}
 
+          {/* Custom Shift Type Colors Settings */}
+          {currentUser?.role === UserRole.MANAGER && (
+            <div className="mb-6 p-5 rounded-2xl bg-indigo-950/20 border border-indigo-500/20 animate-fade-in text-right">
+              <div className="border-b border-indigo-500/10 pb-4 mb-4">
+                <h4 className="text-sm font-black text-indigo-400 flex items-center gap-2">
+                  <span>🎨 تخصيص الألوان التلقائية لفترات المناوبات</span>
+                </h4>
+                <p className="text-xs text-indigo-200 mt-1">
+                  حدد ألواناً مميزة لكل فترة (صباحي، مسائي، ليلي) لتمييزها وتحديدها بسهولة تامة وبلمحة سريعة في جدول المصلحة.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Morning Shift Color */}
+                <div className="space-y-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800">
+                  <label className="text-xs font-black text-amber-400 block pb-1 border-b border-slate-900">
+                    ☀️ الفترة الصباحية (Morning)
+                  </label>
+                  
+                  {/* Presets */}
+                  <div className="flex flex-wrap gap-1.5 justify-end">
+                    {["#f59e0b", "#3b82f6", "#6366f1", "#9333ea", "#10b981", "#f43f5e", "#06b6d4"].map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => {
+                          onUpdateSettings({
+                            ...settings,
+                            showSmartControlToEmployees: settings?.showSmartControlToEmployees !== false,
+                            showAlgorithmToEmployees: settings?.showAlgorithmToEmployees !== false,
+                            morningShiftColor: preset,
+                          } as any);
+                        }}
+                        className="h-5 w-5 rounded-full border border-slate-750 cursor-pointer transition-transform hover:scale-110 flex items-center justify-center text-[8px] text-white"
+                        style={{ backgroundColor: preset }}
+                        title={preset}
+                      >
+                        {settings?.morningShiftColor === preset && "✓"}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Custom Input */}
+                  <div className="flex items-center gap-2 justify-end pt-1">
+                    <input
+                      type="color"
+                      className="w-8 h-8 rounded-lg cursor-pointer bg-transparent border border-slate-700"
+                      value={settings?.morningShiftColor || "#f59e0b"}
+                      onChange={(e) => {
+                        onUpdateSettings({
+                          ...settings,
+                          showSmartControlToEmployees: settings?.showSmartControlToEmployees !== false,
+                          showAlgorithmToEmployees: settings?.showAlgorithmToEmployees !== false,
+                          morningShiftColor: e.target.value,
+                        } as any);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      className="w-20 text-center text-[10px] font-mono bg-slate-900 border border-slate-700 text-white rounded p-1"
+                      value={settings?.morningShiftColor || "#f59e0b"}
+                      onChange={(e) => {
+                        onUpdateSettings({
+                          ...settings,
+                          showSmartControlToEmployees: settings?.showSmartControlToEmployees !== false,
+                          showAlgorithmToEmployees: settings?.showAlgorithmToEmployees !== false,
+                          morningShiftColor: e.target.value,
+                        } as any);
+                      }}
+                      placeholder="#f59e0b"
+                    />
+                  </div>
+                </div>
+
+                {/* Evening Shift Color */}
+                <div className="space-y-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800">
+                  <label className="text-xs font-black text-indigo-400 block pb-1 border-b border-slate-900">
+                    ⛅ الفترة المسائية (Evening)
+                  </label>
+                  
+                  {/* Presets */}
+                  <div className="flex flex-wrap gap-1.5 justify-end">
+                    {["#f59e0b", "#3b82f6", "#6366f1", "#9333ea", "#10b981", "#f43f5e", "#06b6d4"].map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => {
+                          onUpdateSettings({
+                            ...settings,
+                            showSmartControlToEmployees: settings?.showSmartControlToEmployees !== false,
+                            showAlgorithmToEmployees: settings?.showAlgorithmToEmployees !== false,
+                            eveningShiftColor: preset,
+                          } as any);
+                        }}
+                        className="h-5 w-5 rounded-full border border-slate-750 cursor-pointer transition-transform hover:scale-110 flex items-center justify-center text-[8px] text-white"
+                        style={{ backgroundColor: preset }}
+                        title={preset}
+                      >
+                        {settings?.eveningShiftColor === preset && "✓"}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Custom Input */}
+                  <div className="flex items-center gap-2 justify-end pt-1">
+                    <input
+                      type="color"
+                      className="w-8 h-8 rounded-lg cursor-pointer bg-transparent border border-slate-700"
+                      value={settings?.eveningShiftColor || "#6366f1"}
+                      onChange={(e) => {
+                        onUpdateSettings({
+                          ...settings,
+                          showSmartControlToEmployees: settings?.showSmartControlToEmployees !== false,
+                          showAlgorithmToEmployees: settings?.showAlgorithmToEmployees !== false,
+                          eveningShiftColor: e.target.value,
+                        } as any);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      className="w-20 text-center text-[10px] font-mono bg-slate-900 border border-slate-700 text-white rounded p-1"
+                      value={settings?.eveningShiftColor || "#6366f1"}
+                      onChange={(e) => {
+                        onUpdateSettings({
+                          ...settings,
+                          showSmartControlToEmployees: settings?.showSmartControlToEmployees !== false,
+                          showAlgorithmToEmployees: settings?.showAlgorithmToEmployees !== false,
+                          eveningShiftColor: e.target.value,
+                        } as any);
+                      }}
+                      placeholder="#6366f1"
+                    />
+                  </div>
+                </div>
+
+                {/* Night Shift Color */}
+                <div className="space-y-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800">
+                  <label className="text-xs font-black text-purple-400 block pb-1 border-b border-slate-900">
+                    🌙 الفترة الليلية (Night)
+                  </label>
+                  
+                  {/* Presets */}
+                  <div className="flex flex-wrap gap-1.5 justify-end">
+                    {["#f59e0b", "#3b82f6", "#6366f1", "#9333ea", "#10b981", "#f43f5e", "#06b6d4"].map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => {
+                          onUpdateSettings({
+                            ...settings,
+                            showSmartControlToEmployees: settings?.showSmartControlToEmployees !== false,
+                            showAlgorithmToEmployees: settings?.showAlgorithmToEmployees !== false,
+                            nightShiftColor: preset,
+                          } as any);
+                        }}
+                        className="h-5 w-5 rounded-full border border-slate-750 cursor-pointer transition-transform hover:scale-110 flex items-center justify-center text-[8px] text-white"
+                        style={{ backgroundColor: preset }}
+                        title={preset}
+                      >
+                        {settings?.nightShiftColor === preset && "✓"}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Custom Input */}
+                  <div className="flex items-center gap-2 justify-end pt-1">
+                    <input
+                      type="color"
+                      className="w-8 h-8 rounded-lg cursor-pointer bg-transparent border border-slate-700"
+                      value={settings?.nightShiftColor || "#9333ea"}
+                      onChange={(e) => {
+                        onUpdateSettings({
+                          ...settings,
+                          showSmartControlToEmployees: settings?.showSmartControlToEmployees !== false,
+                          showAlgorithmToEmployees: settings?.showAlgorithmToEmployees !== false,
+                          nightShiftColor: e.target.value,
+                        } as any);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      className="w-20 text-center text-[10px] font-mono bg-slate-900 border border-slate-700 text-white rounded p-1"
+                      value={settings?.nightShiftColor || "#9333ea"}
+                      onChange={(e) => {
+                        onUpdateSettings({
+                          ...settings,
+                          showSmartControlToEmployees: settings?.showSmartControlToEmployees !== false,
+                          showAlgorithmToEmployees: settings?.showAlgorithmToEmployees !== false,
+                          nightShiftColor: e.target.value,
+                        } as any);
+                      }}
+                      placeholder="#9333ea"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Sub-tabs switcher */}
           <div className="flex flex-wrap gap-2 bg-slate-950/70 p-1.5 rounded-2xl border border-indigo-800/40 mb-6 max-w-5xl">
             <button

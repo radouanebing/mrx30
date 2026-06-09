@@ -134,6 +134,9 @@ export interface SystemSettings {
   whatsappPhoneId?: string;
   whatsappTemplateName?: string;
   whatsappCustomMessageTemplate?: string;
+  morningShiftColor?: string;
+  eveningShiftColor?: string;
+  nightShiftColor?: string;
 }
 
 export enum LeaveType {

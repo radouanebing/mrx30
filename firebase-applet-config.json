@@ -1,10 +1,10 @@
 {
-  "projectId": "remixed-project-id",
-  "appId": "remixed-app-id",
-  "apiKey": "remixed-api-key",
-  "authDomain": "remixed-auth-domain",
-  "firestoreDatabaseId": "remixed-firestore-database-id",
-  "storageBucket": "remixed-storage-bucket",
-  "messagingSenderId": "remixed-messaging-sender-id",
-  "measurementId": "remixed-measurement-id"
+  "projectId": "optimistic-doodad-l9fkf",
+  "appId": "1:289992860788:web:02dbf98d5f9c1db5bc1d21",
+  "apiKey": "AIzaSyBd-w-8ilUbkbTgYTE6_xe5NOcPfelLxAA",
+  "authDomain": "optimistic-doodad-l9fkf.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-e3c451a9-80f4-4c74-998c-a8027f71d02a",
+  "storageBucket": "optimistic-doodad-l9fkf.firebasestorage.app",
+  "messagingSenderId": "289992860788",
+  "measurementId": ""
 }

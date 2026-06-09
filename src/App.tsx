@@ -272,15 +272,18 @@ export default function App() {
       
       setSyncStatus("idle");
     } catch (err: any) {
-      console.error(err);
-      setSyncStatus("error");
-      
       const errMsg = err.message || String(err);
       const isBootingError = !errMsg || 
                              errMsg.includes("Failed to fetch") || 
                              errMsg.includes("failed to fetch") || 
                              errMsg.includes("ملقم الخدمة السحابي") ||
                              errMsg.includes("Failed to load state");
+
+      if (!isBootingError) {
+        console.error("State sync error:", err);
+      }
+      
+      setSyncStatus("error");
       
       // Auto-retry if the server is still booting or warming up (max 5 retries, 3-sec intervals)
       if (isBootingError && retryCountRef.current < 5) {
@@ -309,8 +312,12 @@ export default function App() {
         }
       }
       throw new Error("Failed to load backups");
-    } catch (err) {
-      console.error("Failed to load backups list", err);
+    } catch (err: any) {
+      const errMsg = err?.message || String(err);
+      if (!errMsg.includes("Failed to fetch") && !errMsg.includes("failed to fetch")) {
+        console.error("Failed to load backups list", err);
+      }
+      
       // Auto-retry backups list load up to 5 times
       if (backupRetryCountRef.current < 5) {
         backupRetryCountRef.current += 1;
